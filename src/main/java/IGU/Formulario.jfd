@@ -4,13 +4,105 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {space :0:400:x}"
-			"$verticalGroup": "par l {space :0:300:x}"
+			"$horizontalGroup": "par l {comp Fondo::t:::x}"
+			"$verticalGroup": "par l {comp Fondo::t:::x}"
 		} ) {
 			name: "this"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {comp Titulo::l:::x, seq {space :p:20:p, par l {seq l {space :p:61:p, comp label2:::p::p}, comp label5::l:p::p, seq l {space :p:17:p, par t {par l:t::p {comp label4:::::x, comp txtPropietario:::p:126:p}, comp txtID:::p:126:p}}, seq l {space :p:16:p, par t {comp btnIngresar:::p::p, comp txtNumeroPatente:::p:126:p, comp btnLimpiar::t:p:122:p}}}, par l {seq l {space :::p, par l {comp txtMarca::t::148:x, seq {space :p:45:p, comp label3:::p::p, space :0:40:x}, comp txtCategoria::t::148:x, comp cboCategoria::l::148:x}, space :p:18:p}, seq {space ::30:x, comp label6:::p::p, space :p:37:p}}, comp scrollPane1:::p:625:p, space :::p}}"
+				"$verticalGroup": "par l {seq l {comp Titulo:::p::p, space :p:29:p, par l {seq {par t {seq {comp label3:::p::p, space :::p, comp txtMarca:::p::p, space s:::p, comp label6:::p::p, space :p:12:p, comp txtCategoria:::p::p}, seq {comp label2:::p::p, space :p:14:p, comp txtID:::p::p, space :p:18:p, comp label4:::p::p, space u:::p, comp txtPropietario:::p::p}}, space u:::p, par b {comp label5::b:p::p, comp cboCategoria::b:p::p}, space u:::p, comp txtNumeroPatente:::p::p, space :p:29:p, comp btnIngresar:::p::p, space s:::p, comp btnLimpiar:::p::p, space :0:225:x}, seq l {comp scrollPane1:::p:358:p, space ::185:x}}}}"
+			} ) {
+				name: "Fondo"
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+					"$horizontalGroup": "par l {seq l {space :p:45:p, comp label1:::p::p, space ::544:x}}"
+					"$verticalGroup": "par l {seq l {space :p:29:p, comp label1:::p::p, space ::32:x}}"
+				} ) {
+					name: "Titulo"
+					"background": new java.awt.Color( 255, 255, 204, 255 )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label1"
+						"text": "Formulario Gestion Vehiculos"
+						"font": new java.awt.Font( "CaskaydiaMono NF SemiBold", 0, 24 )
+					} )
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "cboCategoria"
+					"font": new java.awt.Font( "CaskaydiaMono NF SemiBold", 0, 16 )
+					"model": new javax.swing.DefaultComboBoxModel {
+						selectedItem: "Seleccione"
+						addElement( "Seleccione" )
+						addElement( "Utilidad" )
+						addElement( "Diseño" )
+						addElement( "Planta" )
+						addElement( "Invencion" )
+					}
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label2"
+					"text": "ID:"
+					"font": &Font0 new java.awt.Font( "CaskaydiaMono NF SemiBold", 0, 18 )
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+					"text": "Marca:"
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label4"
+					"text": "Propietario:"
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label5"
+					"text": "Numero Patente:"
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label6"
+					"text": "Categoria:"
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtID"
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtMarca"
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtPropietario"
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtNumeroPatente"
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtCategoria"
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnIngresar"
+					"text": "Ingresar"
+					"font": &Font1 new java.awt.Font( "CaskaydiaMono NF SemiBold", 0, 18 )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnLimpiar"
+					"text": "Limpiar"
+					"font": #Font1
+				} )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane1"
+					add( new FormComponent( "javax.swing.JTable" ) {
+						name: "tabla"
+						"font": new java.awt.Font( "CaskaydiaMono NF SemiBold", 1, 14 )
+						"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
+							add( new java.util.Vector )
+							add( new java.util.Vector )
+						}, new java.util.Vector, new java.util.Vector, new java.util.Vector, new java.util.Vector )
+					} )
+				} )
+			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 400, 300 )
+			"location": new java.awt.Point( 110, 0 )
+			"size": new java.awt.Dimension( 786, 560 )
 		} )
 	}
 }
