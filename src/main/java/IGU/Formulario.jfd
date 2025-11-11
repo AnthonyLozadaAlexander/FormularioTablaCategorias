@@ -9,13 +9,13 @@ new FormModel {
 		} ) {
 			name: "this"
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {comp Titulo::l:::x, seq {space :p:20:p, par l {seq l {space :p:61:p, comp label2:::p::p}, comp label5::l:p::p, seq l {space :p:17:p, par t {par l:t::p {comp label4:::::x, comp txtPropietario:::p:126:p}, comp txtID:::p:126:p}}, seq l {space :p:16:p, par t {comp btnIngresar:::p::p, comp txtNumeroPatente:::p:126:p, comp btnLimpiar::t:p:122:p}}}, par l {seq l {space :::p, par l {comp txtMarca::t::148:x, seq {space :p:45:p, comp label3:::p::p, space :0:40:x}, comp txtCategoria::t::148:x, comp cboCategoria::l::148:x}, space :p:18:p}, seq {space ::30:x, comp label6:::p::p, space :p:37:p}}, comp scrollPane1:::p:625:p, space :::p}}"
-				"$verticalGroup": "par l {seq l {comp Titulo:::p::p, space :p:29:p, par l {seq {par t {seq {comp label3:::p::p, space :::p, comp txtMarca:::p::p, space s:::p, comp label6:::p::p, space :p:12:p, comp txtCategoria:::p::p}, seq {comp label2:::p::p, space :p:14:p, comp txtID:::p::p, space :p:18:p, comp label4:::p::p, space u:::p, comp txtPropietario:::p::p}}, space u:::p, par b {comp label5::b:p::p, comp cboCategoria::b:p::p}, space u:::p, comp txtNumeroPatente:::p::p, space :p:29:p, comp btnIngresar:::p::p, space s:::p, comp btnLimpiar:::p::p, space :0:225:x}, seq l {comp scrollPane1:::p:358:p, space ::185:x}}}}"
+				"$horizontalGroup": "par l {comp Titulo::l:::x, seq {space :p:20:p, par l {seq {par t:::p {comp btnBuscar:::::x, comp btnIngresar::t:::x, comp btnLimpiar::l:p:136:p}, space :::x}, seq t {space :0:165:x, par l:::p {comp btnModificar:::::x, comp btnEliminar:::p:146:p}, space :p:18:p}, seq l {par l {seq l {space :p:61:p, comp label2:::p::p}, comp label5::l:p::p, seq l {space :p:17:p, par t {par l:t::p {comp label4:::::x, comp txtPropietario:::p:126:p}, comp txtID:::p:126:p}}, seq l {space :p:16:p, comp txtNumeroPatente:::p:126:p}}, par l {seq {space s:::p, par l {seq t {space :0:12:x, comp label6:::p::p, space :p:37:p}, seq t {par t {comp txtImporte::l::136:x, comp txtMarca::t:::x, seq l {space :p:45:p, comp label3:::p::p, space :0:0:x}, comp txtCategoria::t:::x, comp cboCategoria::l::0:x}, space :p:18:p}}}, seq t {space ::46:x, comp lblImporte:::p::p, space :p:53:p}}}}, comp scrollPane1:::p:616:p, space :p:15:p}}"
+				"$verticalGroup": "par l {seq l {comp Titulo:::p::p, space :p:29:p, par l {comp scrollPane1::l:p:504:p, seq l {par t {seq {comp label3:::p::p, space :::p, comp txtMarca:::p::p, space s:::p, comp label6:::p::p, space :p:12:p, comp txtCategoria:::p::p}, seq {comp label2:::p::p, space :p:14:p, comp txtID:::p::p, space :p:18:p, comp label4:::p::p, space u:::p, comp txtPropietario:::p::p}}, space u:::p, par b {comp label5::b:p::p, comp cboCategoria::b:p::p}, space s:::p, par b {comp txtNumeroPatente::b:p::p, comp lblImporte::b:p::p}, space u:::p, comp txtImporte:::p::p, space :p:36:p, par l {seq {comp btnIngresar:::p::p, space s:::p, comp btnBuscar:::p::p}, seq {comp btnModificar:::p::p, space s:::p, comp btnEliminar:::p::p}}, space s:::p, comp btnLimpiar:::p::p}}, space ::39:x}}"
 			} ) {
 				name: "Fondo"
 				"background": new java.awt.Color( 255, 255, 255, 255 )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-					"$horizontalGroup": "par l {seq l {space :p:45:p, comp label1:::p::p, space ::544:x}}"
+					"$horizontalGroup": "par l {seq l {space :p:45:p, comp label1:::p::p, space :::x}}"
 					"$verticalGroup": "par l {seq l {space :p:29:p, comp label1:::p::p, space ::32:x}}"
 				} ) {
 					name: "Titulo"
@@ -82,6 +82,7 @@ new FormModel {
 					name: "btnIngresar"
 					"text": "Ingresar"
 					"font": &Font1 new java.awt.Font( "CaskaydiaMono NF SemiBold", 0, 18 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnIngresar", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "btnLimpiar"
@@ -99,9 +100,35 @@ new FormModel {
 						}, new java.util.Vector, new java.util.Vector, new java.util.Vector, new java.util.Vector )
 					} )
 				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnModificar"
+					"text": "Modificar"
+					"font": #Font1
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnModificar", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnEliminar"
+					"text": "Eliminar"
+					"font": #Font1
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEliminar", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnBuscar"
+					"text": "Buscar"
+					"font": #Font1
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnBuscar", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtImporte"
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblImporte"
+					"text": "Importe"
+					"font": #Font0
+				} )
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 110, 0 )
+			"location": new java.awt.Point( 95, 6 )
 			"size": new java.awt.Dimension( 786, 560 )
 		} )
 	}
