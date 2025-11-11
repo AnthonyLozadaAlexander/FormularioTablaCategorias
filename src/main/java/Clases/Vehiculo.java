@@ -4,11 +4,12 @@ public class Vehiculo {
     private String idAuto;
     private String marca;
     private String propietario;
-    private int numeroPatente;
+    private String numeroPatente;
     private String categoria;
     private double importePagar;
 
-    public Vehiculo(String idAuto, String marca, String propietario, int numeroPatente, String categoria, double importePagar) {
+    public Vehiculo(String idAuto, String marca, String propietario, String numeroPatente, String categoria,
+                    double importePagar) {
         this.idAuto = idAuto;
         this.marca = marca;
         this.propietario = propietario;
