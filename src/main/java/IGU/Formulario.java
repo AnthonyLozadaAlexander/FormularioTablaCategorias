@@ -4,6 +4,9 @@
 
 package IGU;
 
+import Clases.Vehiculo;
+import Clases.GestorPatentes;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,43 +14,68 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * @author USUARIO
+ * @author zDefconDev
  */
 public class Formulario extends JFrame {
+    private GestorPatentes gestor;
     private DefaultTableModel modelo; // modelo de la tabla, para poder manipular sus datos.
-    String regex =  "^\\d+(\\.\\d+)?$";
+    String regex = "^\\d+(\\.\\d+)?$";
 
     public Formulario() {
         initComponents();
+        txtCategoria.setEditable(false);
         lblImporte.setVisible(false);
         txtImporte.setVisible(false);
         String[] columns = {"ID", "Marca", "Propietario", "Numero Patente", "Categoria"};
         modelo = new DefaultTableModel(columns, 0);
         tabla.setModel(modelo);
+        gestor = new GestorPatentes();
     }
 
-    private boolean isEmpty(String txt){
-        if(txt == null || txt.trim().isEmpty()){
+    private boolean isEmpty(String txt) {
+        if (txt == null || txt.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Error: Campos Vacios", "ERROR", JOptionPane.ERROR_MESSAGE);
             return true;
         }
         return false;
     }
 
-    private void agregarFila(String id, String marca, String propietario, String numeroPatente, String Categoria){
+    private void agregarFila(String id, String marca, String propietario, String numeroPatente, String Categoria) {
         // Objeto de tipo arreglo para agregar una fila
         Object[] fila = {id, marca, propietario, numeroPatente, Categoria};
         modelo.addRow(fila);
     }
 
-    private double Double(String txt){
+    private void actualizarTabla() {
+        // limpiar la tabla
+        modelo.setRowCount(0);
+
+        // obtener la lista de vehiculos desde el gestor
+        ArrayList<Vehiculo> listVehiculos = gestor.getListVehiculos();
+
+        // agregar cada vehiculo a la tabla
+        for (Vehiculo v : listVehiculos) {
+            Object[] fila = {
+                    v.getIdAuto(),
+                    v.getMarca(),
+                    v.getPropietario(),
+                    v.getNumeroPatente(),
+                    v.getCategoria()
+            };
+            modelo.addRow(fila);
+        }
+    }
+
+    private double Double(String txt) {
         return Double.parseDouble(txt.trim());
     }
-    private void agregar(){
+
+    private void agregar() {
 
         String id = txtID.getText();
         String marca = txtMarca.getText();
@@ -56,35 +84,42 @@ public class Formulario extends JFrame {
         Double importe = Double(txtImporte.getText());
         String categoria = (String) cboCategoria.getSelectedItem();
 
-        if(("Utilidad").equals(categoria)){
+        if (("Utilidad").equals(categoria)) {
+
+            Vehiculo vehiculo = new Vehiculo(id, marca, propietario, numeroPatente, categoria, importe);
             JOptionPane.showMessageDialog(this, "Se le ha agregado un importe del " + importe, "INFO",
                     JOptionPane.INFORMATION_MESSAGE);
+
+            gestor.agregarVehiculo(vehiculo);
+            actualizarTabla();
+
         }
 
-        agregarFila(id, marca, propietario, numeroPatente, categoria);
+
     }
 
     private void btnIngresar(ActionEvent e) {
-        if(isEmpty(txtID.getText()) || isEmpty(txtMarca.getText()) || isEmpty(txtPropietario.getText()) || isEmpty(txtNumeroPatente.getText()) || isEmpty(txtImporte.getText())){
+        if (isEmpty(txtID.getText()) || isEmpty(txtMarca.getText()) || isEmpty(txtPropietario.getText()) || isEmpty(txtNumeroPatente.getText()) || isEmpty(txtImporte.getText())) {
             return;
         }
 
-        if(!txtImporte.getText().matches(regex)){
+        if (!txtImporte.getText().matches(regex)) {
             JOptionPane.showMessageDialog(this, "Error: Importe Invalido", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if(cboCategoria.getSelectedIndex() == 0){
+        if (cboCategoria.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar Una Categoria", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         agregar();
+
     }
 
     private void btnModificar(ActionEvent e) {
         int indexRow = tabla.getSelectedRow();
-        if(indexRow < 0){
+        if (indexRow < 0) {
             JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar Una Fila", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -92,7 +127,7 @@ public class Formulario extends JFrame {
 
     private void btnEliminar(ActionEvent e) {
         int indexRow = tabla.getSelectedRow();
-        if(indexRow < 0){
+        if (indexRow < 0) {
             JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar Una Fila", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -100,6 +135,33 @@ public class Formulario extends JFrame {
 
     private void btnBuscar(ActionEvent e) {
         String ID = JOptionPane.showInputDialog(this, "Ingrese el ID a Buscar: ");
+    }
+
+    private void cboCategoria(ActionEvent e) {
+        String categoria = (String) cboCategoria.getSelectedItem();
+        String[] categorias = {"Utilidad", "Diseño", "Planta", "Invencion"};
+
+        for (int i = 0; i < categorias.length; i++) {
+            if (categoria.equals(categorias[i])) {
+                txtCategoria.setText(categorias[i]);
+                break;
+            }
+        }
+
+        for (int i = 0; i < categorias.length; i++) {
+            if (categoria.equals(categorias[i])) {
+                lblImporte.setVisible(true);
+                txtImporte.setVisible(true);
+                break;
+            } else {
+                lblImporte.setVisible(false);
+                txtImporte.setVisible(false);
+
+            }
+
+
+        }
+
     }
 
     private void initComponents() {
@@ -176,6 +238,7 @@ public class Formulario extends JFrame {
                 "Invencion"
             }));
             cboCategoria.setName("cboCategoria");
+            cboCategoria.addActionListener(e -> cboCategoria(e));
 
             //---- label2 ----
             label2.setText("ID:");
