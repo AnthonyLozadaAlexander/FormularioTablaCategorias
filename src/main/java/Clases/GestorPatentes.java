@@ -9,6 +9,10 @@ public class GestorPatentes {
         listVehiculos = new ArrayList<>();
     }
 
+    public ArrayList<Vehiculo> getListVehiculos(){
+        return listVehiculos;
+    }
+
     public void agregarVehiculo(Vehiculo vehiculo) {
         listVehiculos.add(vehiculo);
     }
