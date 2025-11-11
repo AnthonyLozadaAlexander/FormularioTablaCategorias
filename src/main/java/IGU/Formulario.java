@@ -11,30 +11,70 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.LayoutStyle;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
  * @author USUARIO
  */
 public class Formulario extends JFrame {
+    private DefaultTableModel modelo; // modelo de la tabla, para poder manipular sus datos.
+
     public Formulario() {
         initComponents();
+        String[] columns = {"ID", "Marca", "Propietario", "Numero Patente", "Categoria"};
+        modelo = new DefaultTableModel(columns, 0);
+        tabla.setModel(modelo);
+    }
+
+    private boolean isEmpty(String txt){
+        if(txt == null || txt.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Error: Campos Vacios", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return true;
+        }
+        return false;
+    }
+
+    private void agregarFila(String id, String marca, String propietario, String numeroPatente, String Categoria){
+        // Objeto de tipo arreglo para agregar una fila
+        Object[] fila = {id, marca, propietario, numeroPatente, Categoria};
+        modelo.addRow(fila);
+    }
+
+    private void agregar(){
+        String id = txtID.getText();
+        String marca = txtMarca.getText();
+        String propietario = txtPropietario.getText();
+        String numeroPatente = txtNumeroPatente.getText();
+        String categoria = (String) cboCategoria.getSelectedItem();
+
+        agregarFila(id, marca, propietario, numeroPatente, categoria);
     }
 
     private void btnIngresar(ActionEvent e) {
-        // TODO add your code here
+        if(isEmpty(txtID.getText()) || isEmpty(txtMarca.getText()) || isEmpty(txtPropietario.getText()) || isEmpty(txtNumeroPatente.getText())){
+            return;
+        }
+    }
+
+    private void btnModificar(ActionEvent e) {
+        int indexRow = tabla.getSelectedRow();
+        if(indexRow < 0){
+            JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar Una Fila", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }
+
+    private void btnEliminar(ActionEvent e) {
+        int indexRow = tabla.getSelectedRow();
+        if(indexRow < 0){
+            JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar Una Fila", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }
+
+    private void btnBuscar(ActionEvent e) {
+        String ID = JOptionPane.showInputDialog(this, "Ingrese el ID a Buscar: ");
     }
 
     private void initComponents() {
@@ -58,6 +98,9 @@ public class Formulario extends JFrame {
         btnLimpiar = new JButton();
         scrollPane1 = new JScrollPane();
         tabla = new JTable();
+        btnModificar = new JButton();
+        btnEliminar = new JButton();
+        btnBuscar = new JButton();
 
         //======== this ========
         setName("this");
@@ -85,7 +128,7 @@ public class Formulario extends JFrame {
                         .addGroup(TituloLayout.createSequentialGroup()
                             .addGap(45, 45, 45)
                             .addComponent(label1)
-                            .addContainerGap(544, Short.MAX_VALUE))
+                            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
                 TituloLayout.setVerticalGroup(
                     TituloLayout.createParallelGroup()
@@ -169,6 +212,24 @@ public class Formulario extends JFrame {
                 scrollPane1.setViewportView(tabla);
             }
 
+            //---- btnModificar ----
+            btnModificar.setText("Modificar");
+            btnModificar.setFont(new Font("CaskaydiaMono NF SemiBold", Font.PLAIN, 18));
+            btnModificar.setName("btnModificar");
+            btnModificar.addActionListener(e -> btnModificar(e));
+
+            //---- btnEliminar ----
+            btnEliminar.setText("Eliminar");
+            btnEliminar.setFont(new Font("CaskaydiaMono NF SemiBold", Font.PLAIN, 18));
+            btnEliminar.setName("btnEliminar");
+            btnEliminar.addActionListener(e -> btnEliminar(e));
+
+            //---- btnBuscar ----
+            btnBuscar.setText("Buscar");
+            btnBuscar.setFont(new Font("CaskaydiaMono NF SemiBold", Font.PLAIN, 18));
+            btnBuscar.setName("btnBuscar");
+            btnBuscar.addActionListener(e -> btnBuscar(e));
+
             GroupLayout FondoLayout = new GroupLayout(Fondo);
             Fondo.setLayout(FondoLayout);
             FondoLayout.setHorizontalGroup(
@@ -189,29 +250,34 @@ public class Formulario extends JFrame {
                                         .addComponent(txtPropietario, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtID, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
                             .addGroup(FondoLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addGroup(FondoLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnIngresar)
+                                .addGap(6, 6, 6)
+                                .addGroup(FondoLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnBuscar, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                                     .addComponent(txtNumeroPatente, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btnIngresar, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                    .addComponent(btnLimpiar, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))))
                         .addGroup(FondoLayout.createParallelGroup()
                             .addGroup(FondoLayout.createSequentialGroup()
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(FondoLayout.createParallelGroup()
-                                    .addComponent(txtMarca, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label6)
+                                .addGap(37, 37, 37))
+                            .addGroup(GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(FondoLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addGroup(FondoLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtMarca)
+                                    .addGroup(GroupLayout.Alignment.LEADING, FondoLayout.createSequentialGroup()
                                         .addGap(45, 45, 45)
                                         .addComponent(label3)
-                                        .addGap(0, 40, Short.MAX_VALUE))
-                                    .addComponent(txtCategoria, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(cboCategoria, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
-                                .addGap(18, 18, 18))
-                            .addGroup(FondoLayout.createSequentialGroup()
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                .addComponent(label6)
-                                .addGap(37, 37, 37)))
-                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 625, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtCategoria)
+                                    .addComponent(cboCategoria, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
+                                    .addComponent(btnModificar, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)))
+                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 616, GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))
             );
             FondoLayout.setVerticalGroup(
                 FondoLayout.createParallelGroup()
@@ -244,13 +310,19 @@ public class Formulario extends JFrame {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNumeroPatente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
-                                .addComponent(btnIngresar)
+                                .addGroup(FondoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnModificar)
+                                    .addComponent(btnIngresar))
+                                .addGap(18, 18, 18)
+                                .addGroup(FondoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnEliminar)
+                                    .addComponent(btnBuscar))
                                 .addGap(18, 18, 18)
                                 .addComponent(btnLimpiar)
-                                .addGap(0, 225, Short.MAX_VALUE))
+                                .addGap(0, 177, Short.MAX_VALUE))
                             .addGroup(FondoLayout.createSequentialGroup()
-                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(185, Short.MAX_VALUE))))
+                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(39, Short.MAX_VALUE))))
             );
         }
 
@@ -289,5 +361,8 @@ public class Formulario extends JFrame {
     private JButton btnLimpiar;
     private JScrollPane scrollPane1;
     private JTable tabla;
+    private JButton btnModificar;
+    private JButton btnEliminar;
+    private JButton btnBuscar;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
