@@ -18,6 +18,26 @@ public class Vehiculo {
         this.importePagar = importePagar;
     }
 
+    public String getIdAuto() {
+        return idAuto;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getPropietario() {
+        return propietario;
+    }
+
+    public String getNumeroPatente() {
+        return numeroPatente;
+    }
+
+    public double getImportePagar() {
+        return importePagar;
+    }
+
     public String getCategoria(){
         return categoria;
     }
